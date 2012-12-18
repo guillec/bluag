@@ -1,0 +1,4 @@
+To run the server just run:
+wsapi -c xavante.lua -p 8080
+
+
