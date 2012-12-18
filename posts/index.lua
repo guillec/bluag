@@ -1,3 +1,7 @@
+require "xavante.cgiluahandler"
+
+
+
 function fwrite(fmt, ...)
   return io.write(string.format(fmt, ...))
 end
@@ -20,7 +24,7 @@ function writetail()
   fwrite('</body></html>\n')
 end
 
-local inputfile = 'db.lua'
+local inputfile = '../db.lua'
 writeheader()
 
 count=0
@@ -30,6 +34,25 @@ entry = entry1
 fwrite('<ul>\n')
 f()
 fwrite('</ul>\n')
-
 writetail()
+
+function fulldocument()
+
+end
+
+local file = io.open("example.html", "w")
+file:write("Hellllloo")
+file:close()
+
+cgilua.htmlheader()
+cgilua.put([[
+<html>
+<head>
+  <title>Hello World</title>
+</head>
+<body>
+  <strong>Hello World!</strong>
+</body>
+</html>
+]])
 

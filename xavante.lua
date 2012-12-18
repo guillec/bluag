@@ -4,6 +4,7 @@
 
 require "xavante"
 require "xavante.filehandler"
+require "xavante.cgiluahandler"
 require "wsapi.xavante"
 
 -- Define here where Xavante HTTP documents scripts are located
@@ -14,14 +15,14 @@ local simplerules = {
  { -- URI remapping example
  match = "^[^%./]*/$",
  with = xavante.redirecthandler,
- params = {"index.lua"}
- }, 
+ params = {"index.html"}
+ },
 
- { -- URI remapping example
- match = "^[^%./]*/$",
- with = xavante.redirecthandler,
- params = {"index.lp"}
- }, 
+ { -- cgiluahandler example
+ match = {"%.lp$", "%.lp/.*$", "%.lua$", "%.lua/.*$" },
+ with = xavante.cgiluahandler.makeHandler (webDir)
+ },
+
 
  { -- filehandler example
  match = ".",
