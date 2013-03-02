@@ -26,6 +26,7 @@ writeheader()
 count=0
 f = loadfile(inputfile)
 
+
 entry = entry1
 fwrite('<ul>\n')
 f()

@@ -37,6 +37,7 @@ function add_post_body_to_layout(body, file_title)
       layouts_html = v 
       new_post = new_post .. string.gsub(layouts_html, "{{content}}", body)
     end
+    new_post = add_widgets_to_post(new_post)
     write_post(new_post, file_title)
   end
 end
@@ -50,8 +51,8 @@ function add_widgets_to_post(post_body)
       widget_html = widget_html .. v 
     end
     post_body = string.gsub(post_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
-    return post_body
   end
+  return post_body
 end
 
 local all_posts = get_file_names("_sources")
@@ -61,6 +62,5 @@ for post_file in all_posts:gmatch("[^\r\n]+") do
   for k,v in pairs(post_bodies) do
     post_body = post_body .. v 
   end
-  post_body = add_widgets_to_post(post_body)
   add_post_body_to_layout(post_body, post_file)
 end
