@@ -22,15 +22,14 @@ function lines_from(file)
   return lines
 end
 
-function write_post(post)
-  local new_post = io.open("_build/" .. os.date('%Y%m%d%I%M%S') .. ".html", "w")
+function write_post(post, file_title)
+  local new_post = io.open("_build/" .. file_title, "w")
   new_post:write(post)
   new_post:close()
 end
 
-function add_post_body_to_layout(body)
+function add_post_body_to_layout(body, file_title)
   local layouts = get_file_names("_layouts")
-
   for layout in layouts:gmatch("[^\r\n]+") do
     layout_structures = lines_from("_layouts/" .. layout)
     new_post = ""
@@ -38,16 +37,16 @@ function add_post_body_to_layout(body)
       layouts_html = v 
       new_post = new_post .. string.gsub(layouts_html, "{{body}}", body)
     end
-    write_post(new_post)
+    write_post(new_post, file_title)
   end
 end
 
 local all_posts = get_file_names("_sources")
-for posts in all_posts:gmatch("[^\r\n]+") do
-  post_bodies = lines_from("_sources/" .. posts)
+for post_file in all_posts:gmatch("[^\r\n]+") do
+  post_bodies = lines_from("_sources/" .. post_file)
   post_body = ""
   for k,v in pairs(post_bodies) do
     post_body = post_body .. v 
   end
-  add_post_body_to_layout(post_body)
+  add_post_body_to_layout(post_body, post_file)
 end
