@@ -5,16 +5,50 @@
             {{title}}
           </title>
           <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+          <style>
+            html,body {
+              height: 100%
+            }
+
+            #footer{
+              bottom: -50px;
+              height: 50px;
+              left: 0;
+              position: absolute;
+              right: 0;
+            }
+          </style>
         </head>
         <body>
-          <div class="row-fluid">
-            <div class="span12" style="background-color: black;text-align: center;">
-              <h1 style="color: white">BLUAG</h1>
-              <div class="row-fluid" style="background-color: white;">
+          <div class="row-fluid" style="background-color: black; padding-top: 15px;">
+            <div class="span12 offset3">
+              <p style="color: white">
+                <strong>
+                  <a href="/index.html" style="color: white;">home</a> &nbsp;|&nbsp;
+                </strong> 
+                <small class="muted">your lua blogging thingie</small>
+              </p>
+            </div>
+          </div>
+          <div class="row-fluid" class="span12" style="background-color: gray;">
+            <div>
+              <div class="row-fluid" style="background-color: #00e1ce; padding-top: 55px;">
+                <div class="span3"></div>
+                <div class="span6"><h1 style="color: white; font-size: 100px; text-align: right;">BLUAG!</h1></div>
+                <div class="span3"></div>
+              </div>
+              <div class="row-fluid" style="background-color: white; padding-top: 35px;">
                 <div class="span3"></div>
                 <div class="span6">{{content}}</div>
                 <div class="span3"></div>
               </div>
+            </div>
+          </div>
+          <div id="footer" class="row-fluid" style="background-color: black; padding-top: 15px;">
+            <div class="span12 offset3">
+              <p style="color: white">
+                <small class="muted">copyright your name here</small>
+              </p>
             </div>
           </div>
         </body>
