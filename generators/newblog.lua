@@ -43,5 +43,6 @@ end
 
 mkdir("_sources/")
 mkdir("_layouts/")
+mkdir("_build/")
 create_index_page("_sources/index.html")
 create_default_layout("_layouts/default.html")
