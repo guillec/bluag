@@ -35,9 +35,22 @@ function add_post_body_to_layout(body, file_title)
     new_post = ""
     for k,v in pairs(layout_structures) do
       layouts_html = v 
-      new_post = new_post .. string.gsub(layouts_html, "{{body}}", body)
+      new_post = new_post .. string.gsub(layouts_html, "{{content}}", body)
     end
     write_post(new_post, file_title)
+  end
+end
+
+function add_widgets_to_post(post_body)
+  local widgets = get_file_names("_widgets")
+  for widget in widgets:gmatch("[^\r\n]+") do
+    widget_table = lines_from("_widgets/" .. widget)
+    widget_html = ""
+    for k,v in pairs(widget_table) do
+      widget_html = widget_html .. v 
+    end
+    post_body = string.gsub(post_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
+    return post_body
   end
 end
 
@@ -48,5 +61,6 @@ for post_file in all_posts:gmatch("[^\r\n]+") do
   for k,v in pairs(post_bodies) do
     post_body = post_body .. v 
   end
+  post_body = add_widgets_to_post(post_body)
   add_post_body_to_layout(post_body, post_file)
 end
