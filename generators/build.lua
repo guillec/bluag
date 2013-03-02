@@ -23,7 +23,6 @@ function lines_from(file)
 end
 
 function write_post(post)
-  os.execute("sleep 10")
   local new_post = io.open("_build/" .. os.date('%Y%m%d%I%M%S') .. ".html", "w")
   new_post:write(post)
   new_post:close()
