@@ -86,12 +86,7 @@ function create_default_layout(filename)
               </div>
             </div>
           </div>
-          <div id="footer" class="row-fluid" style="background-color: black; padding-top: 15px;">
-            <div class="span12 offset3">
-              <p style="color: white">
-                <small class="muted">copyright your name here</small>
-              </p>
-            </div>
+          <div id="footer" class="row-fluid" style="padding-top: 15px;">
           </div>
         </body>
       <html>]]
@@ -120,6 +115,7 @@ mkdir("_sources/")
 mkdir("_layouts/")
 mkdir("_build/")
 mkdir("_widgets/")
+mkdir("_build/images/")
 create_index_page("_sources/index.html")
 create_default_layout("_layouts/default.html")
 create_recent_posts("_widgets/recent_posts.html")

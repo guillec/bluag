@@ -34,7 +34,7 @@ function add_post_body_to_layout(body, file_title)
     layout_structures = lines_from("_layouts/" .. layout)
     new_post = ""
     for k,v in pairs(layout_structures) do
-      layouts_html = v 
+      layouts_html = v
       new_post = new_post .. string.gsub(layouts_html, "{{content}}", body)
     end
     new_post = add_widgets_to_post(new_post)
@@ -55,6 +55,18 @@ function add_widgets_to_post(post_body)
   return post_body
 end
 
+function build_recent_posts()
+  local all_posts = get_file_names("_sources")
+  local file_of_recent_posts = io.open("_widgets/recent_posts.html", "w")
+  local list_of_posts = ""
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    list_of_posts = list_of_posts .. "<li><a href='" .. post_file .. "'>" .. string.gsub(post_file, ".html", "") .. "</a></li>"
+  end
+  list_of_posts = "<ul>" .. list_of_posts .. "</ul>"
+  file_of_recent_posts:write(list_of_posts)
+  file_of_recent_posts:close()
+end
+
 local all_posts = get_file_names("_sources")
 for post_file in all_posts:gmatch("[^\r\n]+") do
   post_bodies = lines_from("_sources/" .. post_file)
@@ -64,3 +76,4 @@ for post_file in all_posts:gmatch("[^\r\n]+") do
   end
   add_post_body_to_layout(post_body, post_file)
 end
+build_recent_posts()
