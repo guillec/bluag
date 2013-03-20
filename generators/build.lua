@@ -38,8 +38,16 @@ function add_post_body_to_layout(body, file_title)
       new_post = new_post .. string.gsub(layouts_html, "{{content}}", body)
     end
     new_post = add_widgets_to_post(new_post)
+    new_post = add_title_to_post(new_post)
     write_post(new_post, file_title)
   end
+end
+
+function add_title_to_post(post_body)
+  the_title = string.match(post_body, "--title:(.*) --end_config")
+  post_body = string.gsub(post_body, "{{title}}", the_title)
+  post_body = string.gsub(post_body, "--title:(.*)--end_config","")
+  return post_body
 end
 
 function add_widgets_to_post(post_body)
