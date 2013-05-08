@@ -63,12 +63,18 @@ function add_widgets_to_post(post_body)
   return post_body
 end
 
+function clean_post_title(title)
+  local file_name = string.gsub(title, ".html", "")
+  local cleaned_name = string.gsub(file_name, "-", " ")
+  return cleaned_name
+end
+
 function build_recent_posts()
   local all_posts = get_file_names("_sources")
   local file_of_recent_posts = io.open("_widgets/recent_posts.html", "w")
   local list_of_posts = ""
   for post_file in all_posts:gmatch("[^\r\n]+") do
-    list_of_posts = list_of_posts .. "<li><a href='" .. post_file .. "'>" .. string.gsub(post_file, ".html", "") .. "</a></li>"
+    list_of_posts = list_of_posts .. "<li><a href='" .. post_file .. "'>" .. clean_post_title(post_file) .. "</a></li>"
   end
   list_of_posts = "<ul>" .. list_of_posts .. "</ul>"
   file_of_recent_posts:write(list_of_posts)
