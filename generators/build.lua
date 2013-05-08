@@ -35,6 +35,7 @@ function add_post_body_to_layout(body, file_title)
     new_post = ""
     for k,v in pairs(layout_structures) do
       layouts_html = v
+      layouts_html = add_widgets_to_layout(layouts_html)
       new_post = new_post .. string.gsub(layouts_html, "{{content}}", body)
     end
     new_post = add_widgets_to_post(new_post)
@@ -48,6 +49,19 @@ function add_title_to_post(post_body)
   post_body = string.gsub(post_body, "{{title}}", the_title)
   post_body = string.gsub(post_body, "--title:(.*)--end_config","")
   return post_body
+end
+
+function add_widgets_to_layout(layout_body)
+  local widgets = get_file_names("_widgets")
+  for widget in widgets:gmatch("[^\r\n]+") do
+    widget_table = lines_from("_widgets/" .. widget)
+    widget_html = ""
+    for k,v in pairs(widget_table) do
+      widget_html = widget_html .. v 
+    end
+    layout_body = string.gsub(layout_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
+  end
+  return layout_body
 end
 
 function add_widgets_to_post(post_body)
