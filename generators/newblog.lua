@@ -112,10 +112,11 @@ function create_recent_posts(filename)
 end
 
 mkdir("_sources/")
+mkdir("_pages/")
 mkdir("_layouts/")
 mkdir("_build/")
 mkdir("_widgets/")
 mkdir("_build/images/")
-create_index_page("_sources/index.html")
+create_index_page("_pages/index.html")
 create_default_layout("_layouts/default.html")
 create_recent_posts("_widgets/recent_posts.html")

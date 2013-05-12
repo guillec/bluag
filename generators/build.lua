@@ -36,7 +36,7 @@ function add_post_body_to_layout(body, file_title)
     for k,v in pairs(layout_structures) do
       layouts_html = v
       layouts_html = add_widgets_to_layout(layouts_html)
-      new_post = new_post .. string.gsub(layouts_html, "{{content}}", body)
+      new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
     end
     new_post = add_widgets_to_post(new_post)
     new_post = add_title_to_post(new_post)
@@ -47,7 +47,7 @@ end
 function add_title_to_post(post_body)
   the_title = string.match(post_body, "--title:(.*) --end_config")
   post_body = string.gsub(post_body, "{{title}}", the_title)
-  post_body = string.gsub(post_body, "--title:(.*)--end_config","")
+  post_body = string.gsub(post_body, "--title:(.*) --end_config","")
   return post_body
 end
 
@@ -95,13 +95,55 @@ function build_recent_posts()
   file_of_recent_posts:close()
 end
 
-local all_posts = get_file_names("_sources")
-for post_file in all_posts:gmatch("[^\r\n]+") do
-  post_bodies = lines_from("_sources/" .. post_file)
-  post_body = ""
-  for k,v in pairs(post_bodies) do
-    post_body = post_body .. v 
+function build_blog_posts()
+  local all_posts = get_file_names("_sources")
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    if post_file ~= 'index.html' then
+      post_bodies = lines_from("_sources/" .. post_file)
+      post_body = ""
+      for k,v in pairs(post_bodies) do
+        post_body = post_body .. v 
+      end
+      add_post_body_to_layout(post_body, post_file)
+    else
+      --local index_body = build_index_page()
+      --add_post_body_to_layout(index_body, post_file)
+    end
   end
-  add_post_body_to_layout(post_body, post_file)
 end
+
+function add_post_feed_to_index(post_feed)
+  layout_structures = lines_from("_pages/index.html")
+  new_post = ""
+  for k,v in pairs(layout_structures) do
+    layouts_html = v
+    --layouts_html = add_widgets_to_layout(layouts_html)
+    new_post = new_post .. string.gsub(layouts_html, "{{posts}}", post_feed)
+  end
+  add_post_body_to_layout(new_post, "index.html")
+end
+
+function remove_config(body_with_config)
+  post_body = string.gsub(body_with_config, "--title:(.*)", "")
+  post_body = string.gsub(post_body, "--end_config", "")
+  return post_body
+end
+
+function build_index_page()
+  local all_posts = get_file_names("_sources")
+  local post_feed = ""
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    post_bodies = lines_from("_sources/" .. post_file)
+    post_body = ""
+    for k,v in pairs(post_bodies) do
+      clean_body = remove_config(v)
+      post_feed = post_feed .. clean_body
+    end
+    post_feed = post_feed .. "<hr/>"
+  end
+  add_post_feed_to_index(post_feed)
+end
+
+build_blog_posts()
+build_index_page()
 build_recent_posts()
