@@ -5,7 +5,7 @@ function file_exists(file)
 end
 
 function get_file_names(filedirectory)
-  local files = io.popen("ls " .. filedirectory, "r")
+  local files = io.popen("ls -tU " .. filedirectory, "r")
   if files then
     return files:read("*a")
   else
