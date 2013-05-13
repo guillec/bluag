@@ -29,19 +29,19 @@ function write_post(post, file_title)
 end
 
 function add_post_body_to_layout(body, file_title)
-  local layouts = get_file_names("_layouts")
-  for layout in layouts:gmatch("[^\r\n]+") do
-    layout_structures = lines_from("_layouts/" .. layout)
-    new_post = ""
-    for k,v in pairs(layout_structures) do
-      layouts_html = v
-      layouts_html = add_widgets_to_layout(layouts_html)
-      new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
-    end
-    new_post = add_widgets_to_post(new_post)
-    new_post = add_title_to_post(new_post)
-    write_post(new_post, file_title)
+  local layout_structure = lines_from("_layouts/" .. file_title)
+  if next(layout_structure) == nil then 
+    layout_structure = lines_from("_layouts/default.html")
   end
+  new_post = ""
+  for k,v in pairs(layout_structure) do
+    layouts_html = v
+    layouts_html = add_widgets_to_layout(layouts_html)
+    new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
+  end
+  new_post = add_widgets_to_post(new_post)
+  new_post = add_title_to_post(new_post)
+  write_post(new_post, file_title)
 end
 
 function add_title_to_post(post_body)
@@ -98,17 +98,12 @@ end
 function build_blog_posts()
   local all_posts = get_file_names("_sources")
   for post_file in all_posts:gmatch("[^\r\n]+") do
-    if post_file ~= 'index.html' then
-      post_bodies = lines_from("_sources/" .. post_file)
-      post_body = ""
-      for k,v in pairs(post_bodies) do
-        post_body = post_body .. v 
-      end
-      add_post_body_to_layout(post_body, post_file)
-    else
-      --local index_body = build_index_page()
-      --add_post_body_to_layout(index_body, post_file)
+    post_bodies = lines_from("_sources/" .. post_file)
+    post_body = ""
+    for k,v in pairs(post_bodies) do
+      post_body = post_body .. v 
     end
+    add_post_body_to_layout(post_body, post_file)
   end
 end
 
