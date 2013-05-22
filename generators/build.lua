@@ -107,6 +107,18 @@ function build_blog_posts()
   end
 end
 
+function build_all_pages()
+  local all_posts = get_file_names("_pages")
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    post_bodies = lines_from("_pages/" .. post_file)
+    post_body = ""
+    for k,v in pairs(post_bodies) do
+      post_body = post_body .. v 
+    end
+    add_post_body_to_layout(post_body, post_file)
+  end
+end
+
 function add_post_feed_to_index(post_feed)
   layout_structures = lines_from("_pages/index.html")
   new_post = ""
@@ -140,5 +152,6 @@ function build_index_page()
 end
 
 build_blog_posts()
+build_all_pages()
 build_index_page()
 build_recent_posts()
