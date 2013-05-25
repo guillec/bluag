@@ -31,7 +31,7 @@ function create_index_page(filename)
                         </p>
 
                         <h4 style="padding-top: 40px;">Recent Posts:</h4>
-                        {{recent_posts}}
+                        {{posts}}
                       ]]
     file:write(default_content)
     file:close()
