@@ -16,6 +16,8 @@ function create_index_page(filename)
   if file_exists(filename) then
     local file = io.open(filename, "w")
     default_content = [[
+                        --title: Your First Page
+                        --end_config
                         <p>
                           All right, You just setup your blog! Now what? Well there are a couple of things you can do
                           for example, you can create a new post or start to change this amazing template!
