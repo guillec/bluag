@@ -24,13 +24,13 @@ Blogging platform built in Lua for developers. (Verison 1.0)
   - On build, all folders and files in this directory get copied to _build/assets
 
 2. _build/
-  - On build, this directory gets all populated with your blog.
-  - This is the directory that gets pushed to your github pages
+  - On build, this directory gets populated with your blog.
+  - This is the directory you need to push to your github page
 
 3. _layouts/
   - Holds all layouts for your blog
   - On build, all pages and posts will use this layout unless specified to use another
-  - If you want a page to use a different a different layout call the layout with the same name as the page.
+  - If you want a page to use a different layout name the layout with the same name as the page.
     For example, if you add a about.html page to the _pages directory and you want to use a different layout for that page, create
     a about.html layout in the _layouts directory.
 
@@ -43,11 +43,11 @@ Blogging platform built in Lua for developers. (Verison 1.0)
   - ALL POSTS REQUIRE A --title block
 
 6. _widgets/
-  - Add any widget that you want here
   - A widget can be any small amount of html that you want
-  - To use widgets just place {{file_name}} anywhere in a page or blog post.
-    For example, if you want to use the recent_posts.html widget on a page place {{recent_posts}} on any post
-  - On build, all pages and post will be tested for {{widget_name}} and appended they exist.
+  - Add any widget that you want here
+  - To use widgets just place {{widget_file_name}} anywhere in a page, blog post or layout.
+    For example, if you want to use the recent_posts.html widget on a page place {{recent_posts}} somewhere on the source.
+  - On build, all pages, layouts and posts will be tested for {{widget_name}} and appended if they exist.
 
 # Other Notes:
 1. For the most part Bluag is using twitter bootstrap for styling.
