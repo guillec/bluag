@@ -8,7 +8,7 @@ Blogging platform built in Lua for developers. (Verison 1.0)
 4. git
 
 # Installing:
-1. Clone the repository to your system.
+1. Fork the repository and download code.
 2. Run the following command to set your file structure: 
   - lua generators/newblog.lua
   - Check out the file structure that was built (more about the
