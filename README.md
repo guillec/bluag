@@ -8,9 +8,10 @@
 
 # Installing:
 1. Clone the repository to your system.
-2. Run the following command to set yo file structure: 
+2. Run the following command to set your file structure: 
   - lua generators/newblog.lua
-  - More about the structure bellow.
+  - Check out the file structure that was built (more about the
+    structure bellow).
 3. Run the following to build the default blog:
   - lua generators/build.lua
 4. Make your _build directory the 'master' branch to your github pages project.
