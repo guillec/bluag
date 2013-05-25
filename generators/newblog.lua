@@ -99,11 +99,11 @@ function create_top_menu(filename)
     local file = io.open(filename, "w")
     list_recent_posts = [[
       <span class="offset3" style="font-size: 20px; word-spacing: 5px;">
-        <a href="/" rel="index" rel="index">HOME</a>
+        <a href="/index.html" rel="index" rel="index">HOME</a>
          | 
         <a href="#" rel="index" rel="about">ABOUT ME</a>
          | 
-        <a href="/projects.html" rel="projects">PROJECTS</a>
+        <a href="#" rel="projects">PROJECTS</a>
       </span>
      ]]
     file:write(list_recent_posts)
@@ -170,9 +170,10 @@ function create_first_post(filename)
       --title: Your First Blog Post
       --end_config
 
+      <br/>
       <h3>This Is the First Post</h3>
-      <p>This file is found in the _sources directory. If you want add a new blog post just create a new file in the _sources directory.</p>
-      <p><strong>Very important:</strong> every file in the _sources directory requires a --title: Your Title --end_config blog. Without this
+      <p>This file is found in <em>the _sources</em> directory. If you want to add a new blog post just create a new file in the <em>_sources</em> directory.</p>
+      <p><strong>Very important:</strong> every file in the <em>_sources</em> directory requires a <code>--title: Your Title --end_config</code> block. Without this
       the build will break.</p>
      ]]
     file:write(list_recent_posts)
