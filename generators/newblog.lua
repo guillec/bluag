@@ -95,6 +95,25 @@ function create_recent_posts(filename)
   end
 end
 
+function create_top_menu(filename)
+  if file_exists(filename) then
+    local file = io.open(filename, "w")
+    list_recent_posts = [[
+      <span class="offset3" style="font-size: 20px; word-spacing: 5px;">
+        <a href="/" rel="index" rel="index">HOME</a>
+         | 
+        <a href="/" rel="index" rel="about">ABOUT ME</a>
+         | 
+        <a href="/projects.html" rel="projects">PROJECTS</a>
+         | 
+        <a href="/" rel="index" rel="travels">TRAVELS</a>
+      </span>
+     ]]
+    file:write(list_recent_posts)
+    file:close()
+  end
+end
+
 mkdir("_sources/")
 mkdir("_pages/")
 mkdir("_layouts/")
@@ -106,3 +125,4 @@ mkdir("_assets/images/")
 create_index_page("_pages/index.html")
 create_default_layout("_layouts/default.html")
 create_recent_posts("_widgets/recent_posts.html")
+create_top_menu("_widgets/top_menu.html")
