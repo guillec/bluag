@@ -30,7 +30,7 @@ function create_index_page(filename)
       <p>
         Is Bluag for you? I dont know, but if you are looking to start a blog and don't want to use a annoying CMS you should try this.
         You should especially try this if you are a Lua developer, since all the code is written in Lua. I hope that with Bluag, 
-        as a developer you can just easisly manipulate the content of your post and just over all have more fun.
+        as a developer you can just easily manipulate the content of your post and just over all have more fun.
       </p>
 
       <p>

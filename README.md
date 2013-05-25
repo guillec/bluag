@@ -16,7 +16,15 @@ Blogging platform built in Lua for developers. (Verison 1.0)
 3. Run the following to build the default blog:
   - lua generators/build.lua
 4. Make your _build directory the 'master' branch to your github pages project.
-4. Push your content inside your _build directory to your github pages.
+5. Push your content inside your _build directory to your github pages.
+
+# Build:
+Once you have edited your code or created a new page just run:
+  - lua generators/build.lua
+  - This will run the build script and add the edited content to the
+    _build directory.
+  - You can view you content by either pushing to github pages or
+    navigating to directory.
 
 # File Structure:
 1. _assets/
