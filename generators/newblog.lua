@@ -176,14 +176,12 @@ function create_first_post(filename)
       <p>
         <strong>Very important:</strong> every file in the <em>_sources</em> directory requires a 
 
-        <pre>
+          <br/>
           -*title Your Title
           -*end_config block.
+          <br/>
 
-          Look at source file as an example.
-        </pre>
-
-        Without this the build will break.
+          Look at source file as an example. Without this the build will break.
        </p>
      ]]
     file:write(list_recent_posts)
