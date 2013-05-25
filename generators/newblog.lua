@@ -22,8 +22,7 @@ function create_index_page(filename)
                         </p>
 
                         <p>
-                          Is Bluag for you? I dont know I just built this to practice playing with the Lua programming
-                          language. Also I wanted to start a blog but didn't want to use the massive thing that is them 
+                          Is Bluag for you? I dont know language. I just wanted to start a blog but didn't want to use the massive thing that is them 
                           crazy CMS thingies. I hope that with Bluag, as a developer you can just easisly manipulate the
                           content of your post and just over all have more fun instead of dealing with broken or confusing
                           plugins.
@@ -117,7 +116,6 @@ mkdir("_layouts/")
 mkdir("_build/")
 mkdir("_widgets/")
 mkdir("_assets/")
-mkdir("_pages/")
 mkdir("_assets/stylesheets/")
 mkdir("_assets/images/")
 create_index_page("_pages/index.html")

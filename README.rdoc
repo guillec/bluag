@@ -1,7 +1,3 @@
-= TTD
-  - configure google analytics
-  - Custome Domain
-
 = WARNING: VERY INFANT STAGE
 = Only works on Linux like machines
 
