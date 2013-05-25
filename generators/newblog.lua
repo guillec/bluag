@@ -153,7 +153,7 @@ function create_stylesheet(filename)
   end
 end
 
-function create_styleshee_widget(filename)
+function create_stylesheet_widget(filename)
   if file_exists(filename) then
     local file = io.open(filename, "w")
     list_recent_posts = [[
