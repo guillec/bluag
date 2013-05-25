@@ -41,56 +41,39 @@ end
 function create_default_layout(filename)
   if file_exists(filename) then
     local file = io.open(filename, "w")
-    application_layout = [[<!DOCTYPE html>
-      <html>
-        <head>
-          <title>
-            {{title}}
-          </title>
-          <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-          <style>
-            html,body {
-              height: 100%
-            }
-
-            #footer{
-              bottom: -50px;
-              height: 50px;
-              left: 0;
-              position: absolute;
-              right: 0;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="row-fluid" style="background-color: black; padding-top: 15px;">
-            <div class="span12 offset3">
-              <p style="color: white">
-                <strong>
-                  <a href="/index.html" style="color: white;">home</a> &nbsp;|&nbsp;
-                </strong> 
-                <small class="muted">your lua blogging thingie</small>
-              </p>
+    application_layout = [[
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>
+              {{title}}
+            </title>
+            <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+            <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+            {{stylesheets}}
+          </head>
+          <body>
+            <div class="row-fluid" style="background-color: white; padding: 20px;">
+              <span class="row">
+                <span class="offset1">
+                  <img src="http://www.pairprogramwith.me/badge.png" alt="pair with me logo" />
+                </span>
+                {{top_menu}}
+              </span>
             </div>
-          </div>
-          <div class="row-fluid" class="span12" style="background-color: gray;">
-            <div>
-              <div class="row-fluid" style="background-color: #00e1ce; padding-top: 55px;">
-                <div class="span3"></div>
-                <div class="span6"><h1 style="color: white; font-size: 100px; text-align: right;">BLUAG!</h1></div>
-                <div class="span3"></div>
-              </div>
-              <div class="row-fluid" style="background-color: white; padding-top: 35px;">
-                <div class="span3"></div>
-                <div class="span6">{{post_body}}</div>
-                <div class="span3"></div>
-              </div>
+            <div class="row-fluid" style="padding-top: 35px;">
+              <div class="span10 offset1">{{post_body}}</div>
             </div>
-          </div>
-          <div id="footer" class="row-fluid" style="padding-top: 15px;">
-          </div>
-        </body>
-      <html>]]
+            <div id="footer" class="row-fluid" style="padding-top: 15px;">
+            </div>
+            <script>
+            <!-- Google Analytics Here -->
+            </script>
+          </body>
+        </html>
+      ]]
     file:write(application_layout)
     file:close()
   end
@@ -100,13 +83,13 @@ function create_recent_posts(filename)
   if file_exists(filename) then
     local file = io.open(filename, "w")
     list_recent_posts = [[
-                          <ul class="unstyled" style="padding-top: 10px;">
-                            <li style="border-bottom: solid 1px #999999; padding: 7px 0px;">
-                              <a href='/index.html'>Your Bluag Blog</a>
-                              <span style="float: right;" class="muted"><small>11/11/1111</small></span>
-                            </li>
-                          </ul>
-                         ]]
+      <ul class="unstyled" style="padding-top: 10px;">
+        <li style="border-bottom: solid 1px #999999; padding: 7px 0px;">
+          <a href='/index.html'>Your Bluag Blog</a>
+          <span style="float: right;" class="muted"><small>11/11/1111</small></span>
+        </li>
+      </ul>
+     ]]
     file:write(list_recent_posts)
     file:close()
   end
