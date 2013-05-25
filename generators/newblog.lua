@@ -153,6 +153,17 @@ function create_stylesheet(filename)
   end
 end
 
+function create_top_menu(filename)
+  if file_exists(filename) then
+    local file = io.open(filename, "w")
+    list_recent_posts = [[
+      <link rel="stylesheet" href="assets/stylesheets/style.css">
+     ]]
+    file:write(list_recent_posts)
+    file:close()
+  end
+end
+
 mkdir("_sources/")
 mkdir("_pages/")
 mkdir("_layouts/")
@@ -166,3 +177,4 @@ create_default_layout("_layouts/default.html")
 create_recent_posts("_widgets/recent_posts.html")
 create_top_menu("_widgets/top_menu.html")
 create_stylesheet("_assets/stylesheets/style.css")
+create_stylesheet_widget("_widgets/stylesheets.html")
