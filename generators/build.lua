@@ -151,6 +151,16 @@ function build_index_page()
   add_post_feed_to_index(post_feed)
 end
 
+function mkdir(dirname)
+  os.execute("mkdir " .. dirname)
+end
+
+function move_assets_to_build()
+  mkdir("_build/assets/")
+  os.execute("cp -r _assets/* _build/assets/")
+end
+
+move_assets_to_build()
 build_blog_posts()
 build_all_pages()
 build_index_page()
