@@ -19,16 +19,25 @@ function create_index_page(filename)
       --title: Your First Page
       --end_config
       <p>
-        All right, You just setup your blog! Now what? Well there are a couple of things you can do
-        for example, you can create a new post or start to change this amazing template!
+        All right, You just setup your blog! Now what?<br/>
+        Well there are couple of things you can do, add a new post, create a new page or edit the layout! For more information on this check out the README.
       </p>
 
       <p>
-        Is Bluag for you? I dont know, I just wanted to start a blog but didn't want to use the massive thing that is them 
-        crazy CMS thingies. I hope that with Bluag, as a developer you can just easisly manipulate the
-        content of your post and just over all have more fun instead of dealing with broken or confusing
-        plugins.
+        The other thing you can do is look at the code and help me make this better. Check out the README on how to contribute.
       </p>
+
+      <p>
+        Is Bluag for you? I dont know, I just wanted to start a blog but didn't want to use the massive thing that is those crazy CMS thingies. 
+        I hope that with Bluag, as a developer you can just easisly manipulate the content of your post and just over all have more fun instead 
+        of dealing with broken or confusing plugins.
+      </p>
+
+      <p>
+        There is a lot more that can be done and I am always looking for feedback. Please if interested help me with this project.
+      </p>
+
+      <br/>
 
       {{posts}}
     ]]
