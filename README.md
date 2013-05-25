@@ -67,5 +67,9 @@ Once you have edited your code or created a new page just run:
 4. Push to the branch (git push origin my-new-feature)
 5. Create new Pull Request
 
+# Samples:
+Please let me know or add you site to here
+1. http://guillecarlos.com
+
 
 
