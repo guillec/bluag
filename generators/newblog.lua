@@ -80,7 +80,7 @@ function create_default_layout(filename)
               </div>
               <div class="row-fluid" style="background-color: white; padding-top: 35px;">
                 <div class="span3"></div>
-                <div class="span6">{{content}}</div>
+                <div class="span6">{{post_body}}</div>
                 <div class="span3"></div>
               </div>
             </div>
