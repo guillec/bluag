@@ -16,23 +16,22 @@ function create_index_page(filename)
   if file_exists(filename) then
     local file = io.open(filename, "w")
     default_content = [[
-                        --title: Your First Page
-                        --end_config
-                        <p>
-                          All right, You just setup your blog! Now what? Well there are a couple of things you can do
-                          for example, you can create a new post or start to change this amazing template!
-                        </p>
+      --title: Your First Page
+      --end_config
+      <p>
+        All right, You just setup your blog! Now what? Well there are a couple of things you can do
+        for example, you can create a new post or start to change this amazing template!
+      </p>
 
-                        <p>
-                          Is Bluag for you? I dont know language. I just wanted to start a blog but didn't want to use the massive thing that is them 
-                          crazy CMS thingies. I hope that with Bluag, as a developer you can just easisly manipulate the
-                          content of your post and just over all have more fun instead of dealing with broken or confusing
-                          plugins.
-                        </p>
+      <p>
+        Is Bluag for you? I dont know, I just wanted to start a blog but didn't want to use the massive thing that is them 
+        crazy CMS thingies. I hope that with Bluag, as a developer you can just easisly manipulate the
+        content of your post and just over all have more fun instead of dealing with broken or confusing
+        plugins.
+      </p>
 
-                        <h4 style="padding-top: 40px;">Recent Posts:</h4>
-                        {{posts}}
-                      ]]
+      {{posts}}
+    ]]
     file:write(default_content)
     file:close()
   end
@@ -173,6 +172,8 @@ function create_first_post(filename)
 
       <h3>This Is the First Post</h3>
       <p>This file is found in the _sources directory. If you want add a new blog post just create a new file in the _sources directory.</p>
+      <p><strong>Very important:</strong> every file in the _sources directory requires a --title: Your Title --end_config blog. Without this
+      the build will break.</p>
      ]]
     file:write(list_recent_posts)
     file:close()
