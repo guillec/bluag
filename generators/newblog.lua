@@ -112,6 +112,47 @@ function create_top_menu(filename)
   end
 end
 
+function create_stylesheet(filename)
+  if file_exists(filename) then
+    local file = io.open(filename, "w")
+    list_recent_posts = [[
+      html,body {
+        height: 100%;
+        background-color: #f2f2f2;
+      }
+
+      #footer{
+        bottom: -50px;
+        height: 50px;
+        left: 0;
+        position: absolute;
+        right: 0;
+      }
+
+      hr {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        height: 1px;
+        border: 0; border-top: 1px solid #ccc
+      }
+
+      span.label {
+        margin-top: 10px;
+        margin-right: 15px;
+        padding: 15px;
+        float: left;
+      }
+
+      div.post-header {
+        margin-top: 15px;
+        margin-bottom: 30px;
+      }
+     ]]
+    file:write(list_recent_posts)
+    file:close()
+  end
+end
+
 mkdir("_sources/")
 mkdir("_pages/")
 mkdir("_layouts/")
@@ -124,3 +165,4 @@ create_index_page("_pages/index.html")
 create_default_layout("_layouts/default.html")
 create_recent_posts("_widgets/recent_posts.html")
 create_top_menu("_widgets/top_menu.html")
+create_stylesheet("_assets/stylesheets/style.css")
