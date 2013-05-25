@@ -164,6 +164,21 @@ function create_stylesheet_widget(filename)
   end
 end
 
+function create_first_post(filename)
+  if file_exists(filename) then
+    local file = io.open(filename, "w")
+    list_recent_posts = [[
+      --title: Your First Blog Post
+      --end_config
+
+      <h3>This Is the First Post</h3>
+      <p>This file is found in the _sources directory. If you want add a new blog post just create a new file in the _sources directory.</p>
+     ]]
+    file:write(list_recent_posts)
+    file:close()
+  end
+end
+
 mkdir("_sources/")
 mkdir("_pages/")
 mkdir("_layouts/")
@@ -178,3 +193,4 @@ create_recent_posts("_widgets/recent_posts.html")
 create_top_menu("_widgets/top_menu.html")
 create_stylesheet("_assets/stylesheets/style.css")
 create_stylesheet_widget("_widgets/stylesheets.html")
+create_first_post("_sources/the_very_first_post.html")
