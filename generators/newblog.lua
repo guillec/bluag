@@ -176,8 +176,12 @@ function create_first_post(filename)
       <p>
         <strong>Very important:</strong> every file in the <em>_sources</em> directory requires a 
 
-        title: Your Title 
-        end_config block.
+        <pre>
+          -*title Your Title
+          -*end_config block.
+
+          Look at source file as an example.
+        </pre>
 
         Without this the build will break.
        </p>
