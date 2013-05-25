@@ -173,7 +173,7 @@ function create_first_post(filename)
       <br/>
       <h3>This Is the First Post</h3>
       <p>This file is found in <em>the _sources</em> directory. If you want to add a new blog post just create a new file in the <em>_sources</em> directory.</p>
-      <p><strong>Very important:</strong> every file in the <em>_sources</em> directory requires a <em>--title: Your Title --end_config</em> block. Without this
+      <p><strong>Very important:</strong> every file in the <em>_sources</em> directory requires a \--title: Your Title \--end_config block. Without this
       the build will break.</p>
      ]]
     file:write(list_recent_posts)
