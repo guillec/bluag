@@ -102,11 +102,9 @@ function create_top_menu(filename)
       <span class="offset3" style="font-size: 20px; word-spacing: 5px;">
         <a href="/" rel="index" rel="index">HOME</a>
          | 
-        <a href="/" rel="index" rel="about">ABOUT ME</a>
+        <a href="#" rel="index" rel="about">ABOUT ME</a>
          | 
         <a href="/projects.html" rel="projects">PROJECTS</a>
-         | 
-        <a href="/" rel="index" rel="travels">TRAVELS</a>
       </span>
      ]]
     file:write(list_recent_posts)
