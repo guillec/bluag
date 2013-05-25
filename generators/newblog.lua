@@ -75,6 +75,7 @@ function create_default_layout(filename)
               <div class="span10 offset1">{{post_body}}</div>
             </div>
             <div id="footer" class="row-fluid" style="padding-top: 15px;">
+              Created with <a href="https://github.com/guillec/bluag">bluag</a>
             </div>
             <script>
             <!-- Google Analytics Here -->
