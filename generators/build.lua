@@ -95,28 +95,10 @@ function build_recent_posts()
   file_of_recent_posts:close()
 end
 
-function build_blog_posts()
-  local all_posts = get_file_names("_sources")
-  for post_file in all_posts:gmatch("[^\r\n]+") do
-    post_bodies = lines_from("_sources/" .. post_file)
-    post_body = ""
-    for k,v in pairs(post_bodies) do
-      post_body = post_body .. v 
-    end
-    add_post_body_to_layout(post_body, post_file)
-  end
-end
-
-function build_all_pages()
-  local all_posts = get_file_names("_pages")
-  for post_file in all_posts:gmatch("[^\r\n]+") do
-    post_bodies = lines_from("_pages/" .. post_file)
-    post_body = ""
-    for k,v in pairs(post_bodies) do
-      post_body = post_body .. v 
-    end
-    add_post_body_to_layout(post_body, post_file)
-  end
+function remove_config(body_with_config)
+  post_body = string.gsub(body_with_config, "--title:(.*)", "")
+  post_body = string.gsub(post_body, "--end_config", "")
+  return post_body
 end
 
 function add_post_feed_to_index(post_feed)
@@ -124,16 +106,9 @@ function add_post_feed_to_index(post_feed)
   new_post = ""
   for k,v in pairs(layout_structures) do
     layouts_html = v
-    --layouts_html = add_widgets_to_layout(layouts_html)
     new_post = new_post .. string.gsub(layouts_html, "{{posts}}", post_feed)
   end
   add_post_body_to_layout(new_post, "index.html")
-end
-
-function remove_config(body_with_config)
-  post_body = string.gsub(body_with_config, "--title:(.*)", "")
-  post_body = string.gsub(post_body, "--end_config", "")
-  return post_body
 end
 
 function build_index_page()
@@ -151,6 +126,18 @@ function build_index_page()
   add_post_feed_to_index(post_feed)
 end
 
+function build_all(files_dir)
+  local all_posts = get_file_names(files_dir)
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    post_bodies = lines_from(files_dir .. "/" .. post_file)
+    post_body = ""
+    for k,v in pairs(post_bodies) do
+      post_body = post_body .. v 
+    end
+    add_post_body_to_layout(post_body, post_file)
+  end
+end
+
 function mkdir(dirname)
   os.execute("mkdir " .. dirname)
 end
@@ -161,7 +148,7 @@ function move_assets_to_build()
 end
 
 move_assets_to_build()
-build_blog_posts()
-build_all_pages()
+build_all("_sources")
+build_all("_pages")
 build_index_page()
 build_recent_posts()
