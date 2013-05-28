@@ -18,6 +18,18 @@ Blogging platform built in Lua for developers. (Verison 1.0)
 4. Make your _build directory the 'master' branch to your github pages project.
 5. Push your content inside your _build directory to your github pages.
 
+# Add A New Post:
+1. Run lua generators/new_post.lua [name of post]
+  - Example: lua generators/new_post.lua my new post
+  - A new html file in _sources/my-new-post.html will be created
+  - The <title> of the post will be 'my new post'
+   
+# Add A New Page:
+1. Run lua generators/new_page.lua [name of page]
+  - Example: lua generators/new_page.lua travels
+  - A new html file in _pages/travels.html will be created
+  - The <title> of the page will be 'travels'
+
 # Build:
 Once you have edited your code or created a new page just run:
   - lua generators/build.lua
