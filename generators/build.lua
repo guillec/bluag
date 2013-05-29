@@ -36,10 +36,10 @@ function add_post_body_to_layout(body, file_title)
   new_post = ""
   for k,v in pairs(layout_structure) do
     layouts_html = v
-    layouts_html = add_widgets_to(layouts_html)
+    layouts_html = add_widgets_to_layout(layouts_html)
     new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
   end
-  new_post = add_widgets_to(new_post)
+  new_post = add_widgets_to_post(new_post)
   new_post = add_title_to_post(new_post)
   write_post(new_post, file_title)
 end
@@ -51,7 +51,7 @@ function add_title_to_post(post_body)
   return post_body
 end
 
-function add_widgets_to(file_body)
+function add_widgets_to_layout(layout_body)
   local widgets = get_file_names("_widgets")
   for widget in widgets:gmatch("[^\r\n]+") do
     widget_table = lines_from("_widgets/" .. widget)
@@ -59,9 +59,22 @@ function add_widgets_to(file_body)
     for k,v in pairs(widget_table) do
       widget_html = widget_html .. v 
     end
-    file_body = string.gsub(file_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
+    layout_body = string.gsub(layout_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
   end
-  return file_body
+  return layout_body
+end
+
+function add_widgets_to_post(post_body)
+  local widgets = get_file_names("_widgets")
+  for widget in widgets:gmatch("[^\r\n]+") do
+    widget_table = lines_from("_widgets/" .. widget)
+    widget_html = ""
+    for k,v in pairs(widget_table) do
+      widget_html = widget_html .. v 
+    end
+    post_body = string.gsub(post_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
+  end
+  return post_body
 end
 
 function clean_post_title(title)
@@ -135,6 +148,8 @@ function move_assets_to_build()
 end
 
 move_assets_to_build()
+--build_blog_posts()
+--build_all_pages()
 build_all("_sources")
 build_all("_pages")
 build_index_page()
