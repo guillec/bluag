@@ -56,22 +56,6 @@ function add_title_to_post(post_body)
   return post_body
 end
 
-function add_post_body_to_layout(body, file_title)
-  local layout_structure = lines_from("_layouts/" .. file_title)
-  if next(layout_structure) == nil then 
-    layout_structure = lines_from("_layouts/default.html")
-  end
-  local new_post = ""
-  for k,v in pairs(layout_structure) do
-    local layouts_html = v
-    layouts_html = add_widgets_to(layouts_html)
-    new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
-  end
-  new_post = add_widgets_to(new_post)
-  new_post = add_title_to_post(new_post)
-  write_post(new_post, file_title)
-end
-
 function build_recent_posts()
   local all_posts = get_file_names("_sources")
   local file_of_recent_posts = io.open("_widgets/recent_posts.html", "w")
@@ -94,6 +78,15 @@ function add_widgets_to(content_body)
   return content_body
 end
 
+function build_all(files_dir)
+  local all_posts = get_file_names(files_dir)
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    local post_bodies = lines_from(files_dir .. "/" .. post_file)
+    local post_body = build_html_for(post_bodies)
+    add_post_body_to_layout(post_body, post_file)
+  end
+end
+
 function build_html_for(content)
   local html = ""
   for k,v in pairs(content) do
@@ -102,13 +95,37 @@ function build_html_for(content)
   return html
 end
 
-function build_all(files_dir)
-  local all_posts = get_file_names(files_dir)
-  for post_file in all_posts:gmatch("[^\r\n]+") do
-    local post_bodies = lines_from(files_dir .. "/" .. post_file)
-    local post_body = build_html_for(post_bodies)
-    add_post_body_to_layout(post_body, post_file)
+function build_complex_html_for(content, body, processing)
+  local new_post = ""
+  for k,v in pairs(content) do
+    local layouts_html = v
+    layouts_html = add_widgets_to(layouts_html)
+    new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
   end
+  return new_post
+end
+
+function add_post_body_to_layout(body, file_title)
+  local layout_structure = lines_from("_layouts/" .. file_title)
+  if next(layout_structure) == nil then 
+    layout_structure = lines_from("_layouts/default.html")
+  end
+
+  local new_post = build_complex_html_for(layout_structure, body, function (content) 
+
+  end)
+
+
+
+  --local new_post = ""
+  --for k,v in pairs(layout_structure) do
+  --  local layouts_html = v
+  --  layouts_html = add_widgets_to(layouts_html)
+  --  new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
+  --end
+  new_post = add_widgets_to(new_post)
+  new_post = add_title_to_post(new_post)
+  write_post(new_post, file_title)
 end
 
 function add_post_feed_to_index(post_feed)
