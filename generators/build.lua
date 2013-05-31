@@ -56,19 +56,6 @@ function add_title_to_post(post_body)
   return post_body
 end
 
-function add_widgets_to(content_body)
-  local widgets = get_file_names("_widgets")
-  for widget in widgets:gmatch("[^\r\n]+") do
-    local widget_table = lines_from("_widgets/" .. widget)
-    local widget_html = ""
-    for k,v in pairs(widget_table) do
-      widget_html = widget_html .. v 
-    end
-    content_body = string.gsub(content_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
-  end
-  return content_body
-end
-
 function add_post_body_to_layout(body, file_title)
   local layout_structure = lines_from("_layouts/" .. file_title)
   if next(layout_structure) == nil then 
@@ -97,6 +84,33 @@ function build_recent_posts()
   file_of_recent_posts:close()
 end
 
+function add_widgets_to(content_body)
+  local widgets = get_file_names("_widgets")
+  for widget in widgets:gmatch("[^\r\n]+") do
+    local widget_table = lines_from("_widgets/" .. widget)
+    local widget_html = build_html_for(widget_table)
+    content_body = string.gsub(content_body, "{{" .. string.gsub(widget, ".html", "") .. "}}", widget_html)
+  end
+  return content_body
+end
+
+function build_html_for(content)
+  local html = ""
+  for k,v in pairs(content) do
+    html = html .. v 
+  end
+  return html
+end
+
+function build_all(files_dir)
+  local all_posts = get_file_names(files_dir)
+  for post_file in all_posts:gmatch("[^\r\n]+") do
+    local post_bodies = lines_from(files_dir .. "/" .. post_file)
+    local post_body = build_html_for(post_bodies)
+    add_post_body_to_layout(post_body, post_file)
+  end
+end
+
 function add_post_feed_to_index(post_feed)
   local layout_structures = lines_from("_pages/index.html")
   local new_post = ""
@@ -122,17 +136,6 @@ function build_index_page()
   add_post_feed_to_index(post_feed)
 end
 
-function build_all(files_dir)
-  local all_posts = get_file_names(files_dir)
-  for post_file in all_posts:gmatch("[^\r\n]+") do
-    local post_bodies = lines_from(files_dir .. "/" .. post_file)
-    local post_body = ""
-    for k,v in pairs(post_bodies) do
-      post_body = post_body .. v 
-    end
-    add_post_body_to_layout(post_body, post_file)
-  end
-end
 
 move_assets_to_build()
 build_all("_sources")
