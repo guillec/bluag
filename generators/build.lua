@@ -95,14 +95,12 @@ function build_html_for(content)
   return html
 end
 
-function build_complex_html_for(content, body, processing)
-  local new_post = ""
+function build_complex_html_for(content, processing)
+  local post = ""
   for k,v in pairs(content) do
-    local layouts_html = v
-    layouts_html = add_widgets_to(layouts_html)
-    new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
+    post = post .. processing(v)
   end
-  return new_post
+  return post
 end
 
 function add_post_body_to_layout(body, file_title)
@@ -111,18 +109,11 @@ function add_post_body_to_layout(body, file_title)
     layout_structure = lines_from("_layouts/default.html")
   end
 
-  local new_post = build_complex_html_for(layout_structure, body, function (content) 
-
+  local new_post = build_complex_html_for(layout_structure, function (content) 
+    local html = add_widgets_to(content)
+    return string.gsub(html, "{{post_body}}", body)
   end)
 
-
-
-  --local new_post = ""
-  --for k,v in pairs(layout_structure) do
-  --  local layouts_html = v
-  --  layouts_html = add_widgets_to(layouts_html)
-  --  new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
-  --end
   new_post = add_widgets_to(new_post)
   new_post = add_title_to_post(new_post)
   write_post(new_post, file_title)
@@ -130,11 +121,9 @@ end
 
 function add_post_feed_to_index(post_feed)
   local layout_structures = lines_from("_pages/index.html")
-  local new_post = ""
-  for k,v in pairs(layout_structures) do
-    local layouts_html = v
-    new_post = new_post .. string.gsub(layouts_html, "{{posts}}", post_feed)
-  end
+  local new_post = build_complex_html_for(layout_structures, function (content) 
+    return string.gsub(content, "{{posts}}", post_feed)
+  end)
   add_post_body_to_layout(new_post, "index.html")
 end
 
