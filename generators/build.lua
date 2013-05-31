@@ -1,3 +1,12 @@
+function mkdir(dirname)
+  os.execute("mkdir " .. dirname)
+end
+
+function move_assets_to_build()
+  mkdir("_build/assets/")
+  os.execute("cp -r _assets/* _build/assets/")
+end
+
 function file_exists(file)
   local f = io.open(file, "rb")
   if f then f:close() end
@@ -15,11 +24,17 @@ end
 
 function lines_from(file)
   if not file_exists(file) then return {} end
-  lines = {}
+  local lines = {}
   for line in io.lines(file) do 
     lines[#lines + 1] = line
   end
   return lines
+end
+
+function remove_config(body_with_config)
+  local post_body = string.gsub(body_with_config, "--title:(.*)", "")
+  post_body = string.gsub(post_body, "--end_config", "")
+  return post_body
 end
 
 function write_post(post, file_title)
@@ -28,25 +43,15 @@ function write_post(post, file_title)
   new_post:close()
 end
 
-function add_post_body_to_layout(body, file_title)
-  local layout_structure = lines_from("_layouts/" .. file_title)
-  if next(layout_structure) == nil then 
-    layout_structure = lines_from("_layouts/default.html")
-  end
-  new_post = ""
-  for k,v in pairs(layout_structure) do
-    layouts_html = v
-    layouts_html = add_widgets_to(layouts_html)
-    new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
-  end
-  new_post = add_widgets_to(new_post)
-  new_post = add_title_to_post(new_post)
-  write_post(new_post, file_title)
+function clean_post_title(title)
+  local file_name = string.gsub(title, ".html", "")
+  local cleaned_name = string.gsub(file_name, "-", " ")
+  return cleaned_name
 end
 
 function add_title_to_post(post_body)
-  the_title = string.match(post_body, "--title:(.*) --end_config")
-  post_body = string.gsub(post_body, "{{title}}", the_title)
+  local the_title = string.match(post_body, "--title:(.*) --end_config")
+  local post_body = string.gsub(post_body, "{{title}}", the_title)
   post_body = string.gsub(post_body, "--title:(.*) --end_config","")
   return post_body
 end
@@ -54,8 +59,8 @@ end
 function add_widgets_to(content_body)
   local widgets = get_file_names("_widgets")
   for widget in widgets:gmatch("[^\r\n]+") do
-    widget_table = lines_from("_widgets/" .. widget)
-    widget_html = ""
+    local widget_table = lines_from("_widgets/" .. widget)
+    local widget_html = ""
     for k,v in pairs(widget_table) do
       widget_html = widget_html .. v 
     end
@@ -64,10 +69,20 @@ function add_widgets_to(content_body)
   return content_body
 end
 
-function clean_post_title(title)
-  local file_name = string.gsub(title, ".html", "")
-  local cleaned_name = string.gsub(file_name, "-", " ")
-  return cleaned_name
+function add_post_body_to_layout(body, file_title)
+  local layout_structure = lines_from("_layouts/" .. file_title)
+  if next(layout_structure) == nil then 
+    layout_structure = lines_from("_layouts/default.html")
+  end
+  local new_post = ""
+  for k,v in pairs(layout_structure) do
+    local layouts_html = v
+    layouts_html = add_widgets_to(layouts_html)
+    new_post = new_post .. string.gsub(layouts_html, "{{post_body}}", body)
+  end
+  new_post = add_widgets_to(new_post)
+  new_post = add_title_to_post(new_post)
+  write_post(new_post, file_title)
 end
 
 function build_recent_posts()
@@ -82,17 +97,11 @@ function build_recent_posts()
   file_of_recent_posts:close()
 end
 
-function remove_config(body_with_config)
-  post_body = string.gsub(body_with_config, "--title:(.*)", "")
-  post_body = string.gsub(post_body, "--end_config", "")
-  return post_body
-end
-
 function add_post_feed_to_index(post_feed)
-  layout_structures = lines_from("_pages/index.html")
-  new_post = ""
+  local layout_structures = lines_from("_pages/index.html")
+  local new_post = ""
   for k,v in pairs(layout_structures) do
-    layouts_html = v
+    local layouts_html = v
     new_post = new_post .. string.gsub(layouts_html, "{{posts}}", post_feed)
   end
   add_post_body_to_layout(new_post, "index.html")
@@ -102,10 +111,10 @@ function build_index_page()
   local all_posts = get_file_names("_sources")
   local post_feed = ""
   for post_file in all_posts:gmatch("[^\r\n]+") do
-    post_bodies = lines_from("_sources/" .. post_file)
-    post_body = ""
+    local post_bodies = lines_from("_sources/" .. post_file)
+    local post_body = ""
     for k,v in pairs(post_bodies) do
-      clean_body = remove_config(v)
+      local clean_body = remove_config(v)
       post_feed = post_feed .. clean_body
     end
     post_feed = post_feed .. "<hr/>"
@@ -116,22 +125,13 @@ end
 function build_all(files_dir)
   local all_posts = get_file_names(files_dir)
   for post_file in all_posts:gmatch("[^\r\n]+") do
-    post_bodies = lines_from(files_dir .. "/" .. post_file)
-    post_body = ""
+    local post_bodies = lines_from(files_dir .. "/" .. post_file)
+    local post_body = ""
     for k,v in pairs(post_bodies) do
       post_body = post_body .. v 
     end
     add_post_body_to_layout(post_body, post_file)
   end
-end
-
-function mkdir(dirname)
-  os.execute("mkdir " .. dirname)
-end
-
-function move_assets_to_build()
-  mkdir("_build/assets/")
-  os.execute("cp -r _assets/* _build/assets/")
 end
 
 move_assets_to_build()
