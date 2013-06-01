@@ -31,16 +31,18 @@ function lines_from(file)
   return lines
 end
 
+function build_html_for(content)
+  local html = ""
+  for k,v in pairs(content) do
+    html = html .. v 
+  end
+  return html
+end
+
 function remove_config(body_with_config)
   local post_body = string.gsub(body_with_config, "--title:(.*)", "")
   post_body = string.gsub(post_body, "--end_config", "")
   return post_body
-end
-
-function write_post(post, file_title)
-  local new_post = io.open("_build/" .. file_title, "w")
-  new_post:write(post)
-  new_post:close()
 end
 
 function clean_post_title(title)
@@ -54,6 +56,20 @@ function add_title_to_post(post_body)
   local post_body = string.gsub(post_body, "{{title}}", the_title)
   post_body = string.gsub(post_body, "--title:(.*) --end_config","")
   return post_body
+end
+
+function write_post(post, file_title)
+  local new_post = io.open("_build/" .. file_title, "w")
+  new_post:write(post)
+  new_post:close()
+end
+
+function add_post_feed_to_index(post_feed)
+  local layout_structures = lines_from("_pages/index.html")
+  local new_post = build_complex_html_for(layout_structures, function (content) 
+    return string.gsub(content, "{{posts}}", post_feed)
+  end)
+  add_post_body_to_layout(new_post, "index.html")
 end
 
 function build_recent_posts()
@@ -87,14 +103,6 @@ function build_all(files_dir)
   end
 end
 
-function build_html_for(content)
-  local html = ""
-  for k,v in pairs(content) do
-    html = html .. v 
-  end
-  return html
-end
-
 function build_complex_html_for(content, processing)
   local post = ""
   for k,v in pairs(content) do
@@ -119,14 +127,6 @@ function add_post_body_to_layout(body, file_title)
   write_post(new_post, file_title)
 end
 
-function add_post_feed_to_index(post_feed)
-  local layout_structures = lines_from("_pages/index.html")
-  local new_post = build_complex_html_for(layout_structures, function (content) 
-    return string.gsub(content, "{{posts}}", post_feed)
-  end)
-  add_post_body_to_layout(new_post, "index.html")
-end
-
 function build_index_page()
   local all_posts = get_file_names("_sources")
   local post_feed = ""
@@ -141,7 +141,6 @@ function build_index_page()
   end
   add_post_feed_to_index(post_feed)
 end
-
 
 move_assets_to_build()
 build_all("_sources")
