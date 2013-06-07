@@ -1,5 +1,5 @@
 # BLUAG
-Blogging platform built in Lua for developers. (Verison 1.0)
+Blogging platform built in Lua for developers. (Verison 1.0.1)
 
 # Requirements:
 1. Linux style system. No Windows sorry (Need help with this.)
