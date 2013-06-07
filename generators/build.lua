@@ -79,7 +79,7 @@ function build_recent_posts()
   for post_file in all_posts:gmatch("[^\r\n]+") do
     list_of_posts = list_of_posts .. "<li><a href='" .. post_file .. "'>" .. clean_post_title(post_file) .. "</a></li>"
   end
-  list_of_posts = "<ul>" .. list_of_posts .. "</ul>"
+  list_of_posts = "<h5>Recent Posts:</h5><ul>" .. list_of_posts .. "</ul>"
   file_of_recent_posts:write(list_of_posts)
   file_of_recent_posts:close()
 end
